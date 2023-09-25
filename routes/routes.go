@@ -14,15 +14,15 @@ func SetupRoutes(app *fiber.App) {
 		return c.SendString("Welcome to the API")
 	})
 
-	// Users routes
+	// Users route with pagination support
 	app.Get("/users", func(c *fiber.Ctx) error {
-		// Call the controller method to fetch the list of users
-		users, err := userController.GetUsers()
+		// Call the controller method to fetch the list of users with pagination
+		err := userController.GetUsers(c)
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"error": err.Error(),
 			})
 		}
-		return c.JSON(users)
+		return nil
 	})
 }
