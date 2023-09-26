@@ -4,10 +4,17 @@ import (
 	"go-postgre/controllers"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func SetupRoutes(app *fiber.App) {
 	userController := controllers.UserController{}
+
+	// Create a Fiber app with CORS middleware
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+		AllowMethods: "GET,POST,PUT,DELETE",
+	}))
 
 	// Welcome route
 	app.Get("/", func(c *fiber.Ctx) error {
