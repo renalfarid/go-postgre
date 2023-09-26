@@ -10,7 +10,7 @@ var db *sql.DB
 type User struct {
 	ID       int            `json:"id"`
 	Username sql.NullString `json:"username"`
-	Email    string         `json:"email"`
+	Email    sql.NullString `json:"email"`
 }
 
 // UserModel represents the User model and its database operations.
@@ -27,7 +27,7 @@ func (u User) MarshalJSON() ([]byte, error) {
 		}{
 			ID:       u.ID,
 			Username: u.Username.String,
-			Email:    u.Email,
+			Email:    u.Email.String,
 		})
 	} else {
 		return json.Marshal(&struct {
@@ -37,7 +37,7 @@ func (u User) MarshalJSON() ([]byte, error) {
 		}{
 			ID:       u.ID,
 			Username: "",
-			Email:    u.Email,
+			Email:    "",
 		})
 	}
 }
@@ -58,7 +58,7 @@ func (m *UserModel) FindAll(page, limit int) ([]User, error) {
 	query := `
 		SELECT id, username, email
 		FROM users
-		ORDER BY id
+		ORDER BY id DESC
 		LIMIT $1 OFFSET $2
 	`
 

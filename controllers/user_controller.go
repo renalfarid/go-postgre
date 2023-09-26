@@ -15,7 +15,7 @@ func (c *UserController) GetUsers(ctx *fiber.Ctx) error {
 	// Get the page and limit parameters from the query string.
 	page := ctx.QueryInt("page", 1)
 
-	limit := ctx.QueryInt("limit", 10)
+	limit := ctx.QueryInt("limit", 100)
 
 	// Call the FindAll method from the UserModel with the page and limit parameters.
 	users, err := c.UserModel.FindAll(page, limit)
